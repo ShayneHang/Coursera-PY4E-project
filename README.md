@@ -25,15 +25,15 @@ I repeated the same procedure but now for top 20 common food words, where the fo
 
 After all that is done, I turn the tuples into data frames before exporting them out as CSV to visualise them using R. I decided to use R as my visualisation tool as their syntax is easier to use and Rstudio itself is more powerful in creating visualisation. 
 
-Please refer to my [report](https://github.com/hkh117/Coursera-PY4E-project/blob/master/PY4E%20project/Ichiban-Boshi-Google-Review-report.pdf) for my analysis.
+Please refer to my report for my analysis.
 
 # Limitations 
 
-1. I initially tried to use Tensorflow to perform the review sentiment analysis, but it was not working out due to my limited knowledge, hence I decided to temporary go with the inflexible method of listing out keywords relating each category and filtering out the reviews accordingly. 
+1) I initially tried to use Tensorflow to perform the review sentiment analysis, but it was not working out due to my limited knowledge, hence I decided to temporary go with the inflexible method of listing out keywords relating each category and filtering out the reviews accordingly. 
 
-So the type of review analysis is limited by the list of keywords I created to filter the reviews. If this script is use to perform review analysis on a new different restaurant, the keywords will have to be tweaked to cater to the new restaurant. For example from my report I performed review analysis on Ichiban Boshi, which is a Japanese restaurant chain, so keywords used are relating to Japanese cuisine which will not be suitable for other type of none Japanese restaurants. 
+So the type of review analysis is limited by the list of keywords I created to filter the reviews. If this script is use to perform review analysis on a new different restaurant, the keywords will have to be tweaked to cater to the new restaurant. For example, from my report I performed review analysis on Ichiban Boshi, which is a Japanese restaurant chain, so keywords used are relating to Japanese cuisine which will not be suitable for other type of none Japanese restaurants. 
 
-2. Secondly, the sentiment of reviews is solely based on the ratings given by the diner in their reviews. So in cases where diner gave review on something negative, but with a high rating – this will result in that review falsely captured as positive. 
+2) Secondly, the sentiment of reviews is solely based on the ratings given by the diner in their reviews. So in cases where diner gave review on something negative, but with a high rating – this will result in that review falsely captured as positive. 
 
 Take this this review below for example, this user gave a 4 out of 5 stars rating: 
   “**Service is slow due to shortage of manpower. Overall food is acceptable**”
