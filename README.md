@@ -35,7 +35,7 @@ So the type of review analysis is limited by the list of keywords I created to f
 
 No.2: Secondly, the sentiment of reviews is solely based on the ratings given by the diner in their reviews. So in cases where diner gave review on something negative, but with a high rating – this will result in that review falsely captured as positive. 
 
-Take this this review below for example, this user gave a 4 out of 5 stars rating:
+Take this this review below for example, this user gave a 4 out of 5 stars rating:  
 “*Service is slow due to shortage of manpower. Overall food is acceptable*”
 
 This review will be grouped under *service* & *food* due keyword ‘service’ & ‘food’. Though it was a 4/5 stars rating, user specifically stated service was not up to standard. So in this case it will be falsely captured with a positive rating of 4/5 stars under service category. 
