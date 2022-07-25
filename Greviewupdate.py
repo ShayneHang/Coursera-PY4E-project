@@ -53,7 +53,7 @@ for i in range(0, numofreview):
         timestamp_id = cur.fetchone()[0]
 
         cur.execute(
-            'INSERT OR IGNORE INTO GoogleMapReviews (usernames_id, users_rating, users_review, timestamp_id, insert_date, outlet_name) VALUES (?,?,?,?,?,?)',
+            'INSERT OR IGNORE INTO GoogleMapReviews (usernames_id, users_rating, users_review, users_review_time_stamp, insert_date, outlet_name) VALUES (?,?,?,?,?,?)',
             (usernames_id, b, c, timestamp_id, date.today(), Googlemapreviewscrape.userinput))
 
 

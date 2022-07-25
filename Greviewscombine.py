@@ -12,16 +12,16 @@ if save the different google reviews into separate file, use Greviewseparate.py
 
 '''
 connect to an already existing sqlite file with tables created - if not, 
-uncomment the 'create table' code below to create table in new sqlite file.
+uncomment the 'create table' code below (line 25 - 40) to create table in new sqlite file.
 Then in next subsequent run, comment/delete away that batch of code if not
 it will keep erasing away previous entries
 '''
 
-conn = sqlite3.connect(r'D:\User\Courses\PY4E coursera\project\test.sqlite')
+conn = sqlite3.connect(r'D:\User\Courses\PY4E coursera\project\ichibanboshicombined.sqlite')
 
 cur = conn.cursor()
 
-# # create tables
+# create tables
 # cur.executescript('''
 # DROP TABLE IF EXISTS GoogleMapReviews;
 # DROP TABLE IF EXISTS Usernames;
@@ -39,7 +39,6 @@ cur = conn.cursor()
 #
 # CREATE TABLE GoogleMapReviews(
 #             usernames_id INTEGER,
-#             users_review_count TEXT,
 #             users_rating INTEGER,
 #             users_review TEXT,
 #             users_review_time_stamp TEXT,
@@ -70,7 +69,7 @@ for i in range(0, numofreview):
     timestamp_id = cur.fetchone()[0]
 
     cur.execute(
-        'INSERT OR IGNORE INTO GoogleMapReviews (usernames_id, users_rating, users_review, timestamp_id, insert_date, outlet_name) VALUES (?,?,?,?,?,?)',
+        'INSERT OR IGNORE INTO GoogleMapReviews (usernames_id, users_rating, users_review, users_review_time_stamp, insert_date, outlet_name) VALUES (?,?,?,?,?,?)',
         (usernames_id, b, c, timestamp_id, date.today(),
          Googlemapreviewscrape.userinput))
 

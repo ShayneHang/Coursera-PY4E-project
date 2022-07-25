@@ -75,7 +75,7 @@ toscroll = driver.find_element(By.XPATH,
 # each scroll gives only 10 reviews, so 'total review'/10 gives the total number of scrolls
 # to scroll out all reviews #default is 'range(0,(round(reviewinnum/10)))'
 # if only updating new reviews to database, just run ~10 scrolls will be enough use 'range(0, 10)'
-for i in range(0,3):
+for i in range(0,(round(reviewinnum/10))):
     driver.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight',
                           toscroll
                           )
