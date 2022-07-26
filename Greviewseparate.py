@@ -35,7 +35,7 @@ CREATE TABLE GoogleMapReviews(
             usernames_id INTEGER,
             users_rating INTEGER,
             users_review TEXT,
-            timestamp_id INTEGER,
+            users_review_time_stamp INTEGER,
             insert_date TEXT,
             outlet_name TEXT
             );

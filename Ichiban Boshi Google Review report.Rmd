@@ -53,7 +53,7 @@ I categorised the reviews based on certain keywords and filter them into 4 main 
 \linebreak
 \linebreak
 
-To start off, below we have a graph below which chart out the number of reviews (x-axis) in each of the 4 categories (y-axis). The bars are colour coded to represent the Google ratings of the reviews. So for example if we look at food, there are around close to 1200 reviews related to food and among those close to 450 of them are with rating of 5.
+To start off, below we have a graph below which chart out the number of reviews (x-axis) in each of the 4 categories (y-axis). The bars are colour coded to represent the Google ratings of the reviews. So for example if we look at food, there are around close to 1200 reviews related to food and among those close to 500 of them are with rating of 5.
 
 This graph shows that majority of the reviews are talking about food, followed up by services, place then lastly price, indicating that diners are more focused on the quality of food above others. Also another way to look at this is that diners are comfortable with the price for the food they are getting at Ichiban Boshi, hence the lower amount of reviews about prices and also majority of them are positive with rating of 4 & 5.
 
