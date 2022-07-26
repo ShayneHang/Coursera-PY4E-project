@@ -1,0 +1,145 @@
+---
+title: "Ichiban Boshi Google Review"
+author: "KwangHui"
+date: '2022-07-14'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Context
+Ichiban Boshi has always been my go to restaurant to satisfy my cravings for sushi and other Japanese delights. As part of my project, I will be using Ichiban Boshi as my example to analyse their reviews from Google map.  
+
+Ichiban Boshi is a good candidate for my project because they have 13 outlets around Singapore, with each outlet having average ~300 Google reviews on Google map which will provide ample samples for the analysis. 
+
+## Background
+Ichiban Boshi is under RE&S.  
+
+RE&S was founded in 1988 by Osaka native Hiroshi Tatara, bringing a slice of Japanese lifestyle to Singapore with their Takahashi and Fiesta restaurants. As RE&S grew, they developed new brands and concepts like Kuriya, Shimbashi Soba, Kuishin Bo and Ichiban Boshi. Today, they are a household name all over Singapore.
+
+## Analysis
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(tidyverse)
+library(readxl)
+library(dplyr) #dataframe transformation
+library(readr)
+library(skimr)
+library(janitor)
+library(readr)
+library(magrittr)
+library(ggplot2) #plotting
+library(lubridate) #transforming date
+```
+
+
+I used mainly Python to scrape the Google reviews from the web and clean them. I then use Rstudio to visualise my results.
+
+I categorised the reviews based on certain keywords and filter them into 4 main groups: 'service, price, place, food' as I personally feel these are the 4 main factors which attracts me to try out or go back to a particular restaurant.
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+
+To start off, below we have a graph below which chart out the number of reviews (x-axis) in each of the 4 categories (y-axis). The bars are colour coded to represent the Google ratings of the reviews. So for example if we look at food, there are around close to 1200 reviews related to food and among those close to 450 of them are with rating of 5.
+
+This graph shows that majority of the reviews are talking about food, followed up by services, place then lastly price, indicating that diners are more focused on the quality of food above others. Also another way to look at this is that diners are comfortable with the price for the food they are getting at Ichiban Boshi, hence the lower amount of reviews about prices and also majority of them are positive with rating of 4 & 5.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+review_df <- read_csv("D:\\User\\Courses\\PY4E coursera\\project\\combinedf.csv")
+
+
+review_df %>%
+  ggplot(aes(x = fct_rev(fct_infreq(wordtag)), fill = as.factor(rating))) +
+  geom_bar(stat = 'count') +
+  coord_flip() +
+  ylab('number of reviews') +
+  xlab('type of reviews') +
+  scale_fill_manual(values = c('darkorange', 'orange', 'goldenrod', 'yellow3', 'yellowgreen'), 
+                    name = 'Rating', labels = c('1', '2', '3', '4', '5'))
+```
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+
+
+
+Next I split up the reviews into each single word by word to find out what is the most common used word and used food word.
+
+Below we have the top 20 words mentioned by diners in their Google reviews. We can see that 'food' and 'good' are top few most mentioned word which are in line with earlier graph. There are also no negative words are present in the top 20, proving their quality and something that Ichiban Boshi should continue to maintain!
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+commonword_df <- read_csv("D:\\User\\Courses\\PY4E coursera\\project\\commonworddf.csv")
+
+commonword_df %>%
+  ggplot(aes(x = fct_rev(fct_infreq(word)), fill = as.factor(rating))) +
+  geom_bar(stat = 'count') +
+  coord_flip() +
+  xlab('top 20 common words') +
+  ylab('number of reviews') +
+  scale_fill_manual(values = c('darkorange', 'orange', 'goldenrod', 'yellow3', 'yellowgreen'), 
+                    name = 'Rating', labels = c('1', '2', '3', '4', '5'))
+```
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+\linebreak
+
+Lastly we take a look at the most mentioned food word. Salmon & beef are top 2 most mentioned food word. It is assuring to see that the top 20 common food words were positively rated. But we do see that don, katsu and curry have noticeable amount of 1 star ratings, which is worth investigating into. 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+commonfoodword_df <- read_csv("D:\\User\\Courses\\PY4E coursera\\project\\commonfoodworddf.csv")
+
+commonfoodword_df %>%
+  ggplot(aes(x = fct_rev(fct_infreq(foodword)), fill = as.factor(rating))) +
+  geom_bar(stat = 'count') +
+  coord_flip() +
+  xlab('top 20 common food words') +
+  ylab('number of reviews') +
+  scale_fill_manual(values = c('darkorange', 'orange', 'goldenrod', 'yellow3', 'yellowgreen'), 
+                    name = 'Rating', labels = c('1', '2', '3', '4', '5'))
+```
+
