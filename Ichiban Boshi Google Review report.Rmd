@@ -53,9 +53,9 @@ I categorised the reviews based on certain keywords and filter them into 4 main 
 \linebreak
 \linebreak
 
-To start off, below we have a graph below which chart out the number of reviews (x-axis) in each of the 4 categories (y-axis). The bars are colour coded to represent the Google ratings of the reviews. So for example if we look at food, there are around close to 1200 reviews related to food and among those close to 500 of them are with rating of 5.
+To start off, below we have a graph below which chart out the number of reviews (x-axis) in each of the 4 categories (y-axis). The bars are colour coded to represent the Google ratings of the reviews. So for example if we look at food, there are around close to 1500 reviews related to food and among those close to 500 of them are with rating of 5.
 
-This graph shows that majority of the reviews are talking about food, followed up by services, place then lastly price, indicating that diners are more focused on the quality of food above others. Also another way to look at this is that diners are comfortable with the price for the food they are getting at Ichiban Boshi, hence the lower amount of reviews about prices and also majority of them are positive with rating of 4 & 5.
+This graph shows that majority of the reviews are talking about food, follow by services, place then price, sign that diners are more focused on the quality of food above others. Also another way we can look at this is that diners are comfortable with the price for the food they are getting at Ichiban Boshi, hence the lower number of reviews about prices. Also majority of the reviews in the four categories are positive with ratings above 3.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 review_df <- read_csv("D:\\User\\Courses\\PY4E coursera\\project\\combinedf.csv")
@@ -90,9 +90,9 @@ review_df %>%
 
 
 
-Next I split up the reviews into each single word by word to find out what is the most common used word and used food word.
+Next I split up the reviews into individual words to find out what is the most common used word and used food word.
 
-Below we have the top 20 words mentioned by diners in their Google reviews. We can see that 'food' and 'good' are top few most mentioned word which are in line with earlier graph. There are also no negative words are present in the top 20, proving their quality and something that Ichiban Boshi should continue to maintain!
+Below we have the top 20 words mentioned by diners in their Google reviews. We can see that 'food' and 'good' are top few most mentioned word - supporting result from previous graph that majority of the reviews are positive ratings. There are also no negative words are present in the top 20, proving their quality and something that Ichiban Boshi should continue to maintain!
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
