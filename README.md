@@ -25,7 +25,7 @@ I repeated the same procedure but now for top 20 common food words, where the fo
 
 After all that is done, I turn the tuples into data frames before exporting them out as CSV to visualise them using R. I decided to use R as my visualisation tool as their syntax is easier to use and Rstudio itself is more powerful in creating visualisation. 
 
-Please refer to my report for my analysis.
+Please refer to my [report](https://github.com/hkh117/Coursera-PY4E-project/blob/master/Ichiban-Boshi-Google-Review-report.pdf) for my analysis.
 
 # Limitations 
 
