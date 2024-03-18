@@ -1,3 +1,4 @@
+# %% 
 from selenium import webdriver #import webdriver to use
 from selenium.webdriver.common.keys import Keys #give access to enter button, esc button, so that we can interactive more in the webpage
 from selenium.webdriver.common.by import By #new syntax to search the webpage element by ID, class, etc
@@ -9,6 +10,8 @@ from bs4 import BeautifulSoup
 import ssl
 
 
+# %% 
+
 #ignore SSL certificate error
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
@@ -16,7 +19,6 @@ ctx.verify_mode = ssl.CERT_NONE
 
 
 ### loading google map for review scraping ###
-
 # set up path to webdriver
 PATH = 'D:\Others\chromedriver.exe'
 driver = webdriver.Chrome(PATH)
@@ -35,7 +37,7 @@ userinput = input('Search (input as specific as possible):')
 search.send_keys(userinput)
 search.send_keys(Keys.RETURN) # return is enter, so to execute the search, like pressing enter
 
-
+# %% 
 # find number of reviews, to calculate how many times to scroll
 try:
     numreview = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH,
@@ -148,3 +150,4 @@ if len(usersnamex) == len(userrating) == len(userreview) == len(reviewtimestamp)
     print('list length are all equal')
 else:
     print('list length not equal, please check')
+# %%
