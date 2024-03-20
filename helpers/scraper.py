@@ -16,6 +16,7 @@ from pathlib import Path
 import sys
 import pandas as pd
 from datetime import datetime
+import os 
 
 
 #ignore SSL certificate error
@@ -24,7 +25,7 @@ ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
 
-def restart_search():
+def restart_search(driver):
     search = driver.find_element("xpath", "//input[@id='searchboxinput']")
     search.clear()
     userinput = input('Search (input as specific as possible):')
@@ -32,14 +33,13 @@ def restart_search():
     search.send_keys(Keys.RETURN)
     time.sleep(2)
 
-
-cwd = Path.cwd()
-service = Service(executable_path=f'{cwd}/chromedriver.exe')
-# service = Service(executable_path=chromedriver_bin)
-driver = webdriver.Chrome(service=service)
+# cwd = Path.cwd()
+dir_path = os.path.dirname(os.path.realpath(__file__))
+service = Service(executable_path=f'{dir_path}/chromedriver.exe')
 
 def scrape_review() -> pd.DataFrame:
-    
+    driver = webdriver.Chrome(service=service)
+
     # input website to go to
     driver.get('https://www.google.com/maps')
     driver.maximize_window()
@@ -113,7 +113,7 @@ def scrape_review() -> pd.DataFrame:
                     break
                 
                 elif choice.isdigit() and int(choice) == 0:
-                    restart_search()
+                    restart_search(driver)
                     break
                 
                 else:
