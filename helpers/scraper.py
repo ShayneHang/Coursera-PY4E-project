@@ -153,6 +153,7 @@ def scrape_review() -> pd.DataFrame:
             if 'review' in tag.strip():
                 num_reviews = re.findall(r'\d+', tag)
 
+    time.sleep(2)
     num_reviews = int(num_reviews[0])
     print(f'there are {num_reviews} reviews for {outlet_list[chosen_option]}\n')
 
@@ -250,7 +251,7 @@ def scrape_review() -> pd.DataFrame:
 
     end_time = datetime.now()
 
-    print(f"\nIt took {round((end_time-start_time).total_seconds()/60, 2)}mins to run this process\n")
+    print(f"\nIt took {round((end_time-start_time).total_seconds()/60, 2)}mins to extract the data\n")
     
     return review_df
 

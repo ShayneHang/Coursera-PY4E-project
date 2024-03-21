@@ -4,3 +4,7 @@ venv/
 
 # sandbox
 sandbox.html
+
+# flet
+main.py
+recommend_food/

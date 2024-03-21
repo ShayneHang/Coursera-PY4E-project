@@ -1,17 +1,17 @@
-# %% 
-
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
 from helpers.scraper import scrape_review
 
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.tag import pos_tag
+from nltk.chunk import RegexpParser
+# nltk.download("punkt")
+# nltk.download("averaged_perceptron_tagger")
 
-tokenizer = AutoTokenizer.from_pretrained("Dizex/FoodBaseBERT")
-model = AutoModelForTokenClassification.from_pretrained("Dizex/FoodBaseBERT")
-
-pipe = pipeline("ner", model=model, tokenizer=tokenizer)
-# example = "Today's meal: Fresh olive poké bowl topped with chia seeds. Very delicious!"
-# ner_entity_results = pipe(example)
-# print(ner_entity_results)
+import pprint
+import re
+from datetime import datetime
 
 '''
 objective:
@@ -33,50 +33,121 @@ objective:
 
 '''
 
+def find_string(index: int, text: str):
+    start_index = text.rfind(' ', 0, index) + 1 if text[:index].rfind(' ') != -1 else 0
+    end_index = text.find(' ', index)
+    if end_index == -1:
+        end_index = len(text)
+    return text[start_index:end_index]
 
-# %% get the df with the reviews
-
-reviews_df = scrape_review()
-
-# %% 
-
-test = reviews_df['user_reviews'][0:1].values[0]
-ner_entity_results = pipe(test)
-for i in ner_entity_results:
-    print(i['word'])
+def clean_string(words: str):
+    words = re.sub(r'[^\w\s]', '', words)
+    words = re.sub(r'\n', '', words)
+    # words = words.lower()
     
+    return words
 
-# another way to fix the ## with the results is to use word proximity and determine
-# which words does it belongs to
+def noun_finder(text: str):
+    # Tokenize the sentence into words
+    words = word_tokenize(text)
+
+    # Perform part-of-speech tagging
+        # [('Food', 'NN'),
+        #  ('was', 'VBD'),
+        #  ('a', 'DT'),
+        #  ('disappointing', 'JJ'),
+    tagged_words = pos_tag(words)
+
+    # Define a grammar for chunking
+    # this will only connect nouns together
+    # Create a chunk parser and apply chunking
+    grammar = r""" NP: {<NN.*>+} """
+    chunk_parser = RegexpParser(grammar)
+    chunked_words = chunk_parser.parse(tagged_words)
+
+    # Extract chunks (noun phrases)
+    nouns = []
+    for subtree in chunked_words.subtrees():
+        if subtree.label() == 'NP':
+            noun_phrase = ' '.join(word for word, pos in subtree.leaves())
+            nouns.append(noun_phrase)
+
+    return nouns
+
+tokenizer = AutoTokenizer.from_pretrained("Dizex/FoodBaseBERT")
+model = AutoModelForTokenClassification.from_pretrained("Dizex/FoodBaseBERT")
+pipe = pipeline("ner", model=model, tokenizer=tokenizer)
+
+# example = "Today's meal: Fresh olive poké bowl topped with chia seeds. Very delicious!"
+# ner_entity_results = pipe(example)
+# print(ner_entity_results)
+
+# get the df with the reviews
 
 
-# %% 
-
-rating_food_dict = {1: [], 2: [], 3:[], 4:[], 5:[]}
-rating_food_dict_2 = {1: [], 2: [], 3:[], 4:[], 5:[]}
-
-
-test_reviews_df = reviews_df[:10]
-
-for i, data in test_reviews_df.iterrows():
-    food_word_list = []
-    food_word_list_2 = []
-    # print(data['user_reviews'])
-    # print(type(data['user_reviews']))
-    ner_entity_results = pipe(data['user_reviews'])
+def recommended_food():
     
-    for i in ner_entity_results:
-        food_word_list.append(i['word'])
-    rating_food_dict[data['user_ratings']] = food_word_list
-    # print(f'this is food_word_list: {food_word_list}')
+    reviews_df = scrape_review()
     
-    for words in data['user_reviews'].split():
-        # print(words.lower())
-        if words.lower() in food_word_list:
-            # print('there is a match@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            food_word_list_2.append(words)
-    rating_food_dict_2[data['user_ratings']] = food_word_list_2
+    rating_food_dict = {1: [], 2: [], 3:[], 4:[], 5:[]}
 
-print(rating_food_dict)
-print(rating_food_dict_2)
+    # test_reviews_df = reviews_df[20:40]
 
+    print(f'.....parsing through the reviews.....\n')
+    
+    start_time = datetime.now()
+    
+    for i, data in reviews_df.iterrows():
+        
+        # refresh the word list
+        food_word_list = []
+
+        # skip empty reviews
+        if data['user_reviews'] == '':
+            continue
+        
+        
+        review_text = data['user_reviews'].lower()
+        
+        # extracts only the nouns from the reviews.
+        nouns_list = noun_finder(review_text)
+        
+        
+        # if list not empty, use the model to check which are food and only capture those text
+        if nouns_list:
+            
+            # using model to evaluate those captured nouns 
+            ner_entity_results = pipe(nouns_list)
+            
+            
+            for results, food_name in zip(ner_entity_results, nouns_list):
+                
+                # if results from model evaluation is not empty
+                if results:
+                    
+                    # check the evaluation score
+                    for scores in results:
+                        
+                        if scores['score'] >= 0.8:
+                            
+                            if food_name not in food_word_list:
+                                food_word_list.append(food_name)
+
+        # if there's food words captured, add to dict
+        if food_word_list:
+            rating_food_dict[data['user_ratings']].append(food_word_list)
+
+    end_time = datetime.now()
+
+    print(f"\nIt took {round((end_time-start_time).total_seconds()/60, 2)}mins to parse the data\n")
+
+    print('These are the recommended food items from 4 & 5 stars reviews')
+    recommended_food_list = rating_food_dict[4] + rating_food_dict[5]
+    for i in recommended_food_list:
+        print(i)
+    
+    return
+
+
+if __name__ == "__main__":
+    recommended_food()
