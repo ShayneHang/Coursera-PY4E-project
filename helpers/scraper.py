@@ -85,6 +85,14 @@ def scrape_review() -> pd.DataFrame:
             main_element = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(main_role_locator)
             )
+
+            # find the element of the name of the restaurant
+            rest_name = driver.find_elements("xpath", "//*[@class='DUwDvf lfPIob']")
+            # .text return the text in the HTML tags
+            rest_name = rest_name[0].text
+            
+            outlet_list = [rest_name]
+            chosen_option = 0
             
             break
 
@@ -124,7 +132,7 @@ def scrape_review() -> pd.DataFrame:
                     print("0. Restart your search again\n")
                 
     print('going to next step\n')
-    
+
     start_time = datetime.now()
     
     # click the reviews button
@@ -155,7 +163,8 @@ def scrape_review() -> pd.DataFrame:
 
     time.sleep(2)
     num_reviews = int(num_reviews[0])
-    print(f'there are {num_reviews} reviews for {outlet_list[chosen_option]}\n')
+    
+    print(f'there are {num_reviews} reviews for {outlet_list[chosen_option]}\n')        
 
     print(f'.....scrolling to view all reviews for parsing.....\n')
 
