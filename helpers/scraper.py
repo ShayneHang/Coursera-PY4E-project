@@ -37,21 +37,22 @@ def restart_search(driver):
 dir_path = os.path.dirname(os.path.realpath(__file__))
 service = Service(executable_path=f'{dir_path}/chromedriver.exe')
 
-def scrape_review() -> pd.DataFrame:
+def scrape_review(restaurant_name: str) -> pd.DataFrame:
     driver = webdriver.Chrome(service=service)
 
     # input website to go to
     driver.get('https://www.google.com/maps')
     driver.maximize_window()
 
-    print("What restaurant would you like to search for?")
+    # print("What restaurant would you like to search for?")
 
     # wait for searchbox element to load and clear its content
     search = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "searchboxinput")))
     search.clear()
 
     # not suitable for searching hotel related places as their layout is different
-    userinput = input('Search (input as specific as possible):')
+    # userinput = input('Search (input as specific as possible):')
+    userinput = restaurant_name
     search.send_keys(userinput)
     # search.send_keys('ichiban boshi')
     search.send_keys(Keys.RETURN) # return is enter, so to execute the search, like pressing enter
@@ -162,7 +163,8 @@ def scrape_review() -> pd.DataFrame:
                 num_reviews = re.findall(r'\d+', tag)
 
     time.sleep(2)
-    num_reviews = int(num_reviews[0])
+    num_reviews = "".join(num_reviews[:])
+    num_reviews = int(num_reviews)
     
     print(f'there are {num_reviews} reviews for {outlet_list[chosen_option]}\n')        
 
@@ -202,7 +204,7 @@ def scrape_review() -> pd.DataFrame:
     # if only updating new reviews to database, just run ~10 scrolls will be enough use 'range(0, 10)'
     for i in range(0,(round(num_reviews/10))):
         driver.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', toscroll)
-        time.sleep(1)
+        time.sleep(3)
 
     print(f'.....Expanding all comments for parsing.....\n')
 

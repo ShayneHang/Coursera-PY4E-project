@@ -10,6 +10,7 @@ from nltk.chunk import RegexpParser
 # nltk.download("averaged_perceptron_tagger")
 
 import pprint
+import pandas as pd
 import re
 from datetime import datetime
 
@@ -85,9 +86,9 @@ pipe = pipeline("ner", model=model, tokenizer=tokenizer)
 # get the df with the reviews
 
 
-def recommended_food():
-    
-    reviews_df = scrape_review()
+reviews_df = scrape_review()
+
+def recommended_food(reviews_df: pd.Dataframe) -> list:
     
     rating_food_dict = {1: [], 2: [], 3:[], 4:[], 5:[]}
 
@@ -146,7 +147,7 @@ def recommended_food():
     for i in recommended_food_list:
         print(i)
     
-    return
+    return recommended_food_list
 
 
 if __name__ == "__main__":
