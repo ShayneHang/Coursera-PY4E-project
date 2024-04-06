@@ -8,3 +8,6 @@ sandbox.html
 # flet
 main.py
 recommend_food/
+
+# password and stuff
+.env

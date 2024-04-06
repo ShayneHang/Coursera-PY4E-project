@@ -1,6 +1,10 @@
+# %% 
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
 from helpers.scraper import scrape_review
+import torch
+torch.set_num_threads(1)
+
 
 import nltk
 from nltk.tokenize import word_tokenize
@@ -86,9 +90,12 @@ pipe = pipeline("ner", model=model, tokenizer=tokenizer)
 # get the df with the reviews
 
 
-reviews_df = scrape_review()
+# reviews_df = scrape_review()
 
-def recommended_food(reviews_df: pd.Dataframe) -> list:
+def recommended_food(restaurant_name: str) -> list:
+    
+    
+    reviews_df = scrape_review(restaurant_name)
     
     rating_food_dict = {1: [], 2: [], 3:[], 4:[], 5:[]}
 
