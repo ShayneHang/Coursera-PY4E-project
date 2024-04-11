@@ -1,0 +1,3 @@
+[submodule "submodules/FoodBaseBERT-NER"]
+	path = submodules/FoodBaseBERT-NER
+	url = https://huggingface.co/Dizex/FoodBaseBERT-NER

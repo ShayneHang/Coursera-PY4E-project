@@ -2,11 +2,7 @@
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
 from helpers.scraper import scrape_review
-import torch
-torch.set_num_threads(1)
 
-
-import nltk
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from nltk.chunk import RegexpParser
@@ -79,8 +75,13 @@ def noun_finder(text: str):
 
     return nouns
 
-tokenizer = AutoTokenizer.from_pretrained("Dizex/FoodBaseBERT")
-model = AutoModelForTokenClassification.from_pretrained("Dizex/FoodBaseBERT")
+# model source https://huggingface.co/Dizex/FoodBaseBERT-NER
+# tokenizer = AutoTokenizer.from_pretrained("Dizex/FoodBaseBERT")
+# model = AutoModelForTokenClassification.from_pretrained("Dizex/FoodBaseBERT")
+# pipe = pipeline("ner", model=model, tokenizer=tokenizer)
+
+tokenizer = AutoTokenizer.from_pretrained("submodules/FoodBaseBERT-NER")
+model = AutoModelForTokenClassification.from_pretrained("submodules/FoodBaseBERT-NER")
 pipe = pipeline("ner", model=model, tokenizer=tokenizer)
 
 # example = "Today's meal: Fresh olive poké bowl topped with chia seeds. Very delicious!"

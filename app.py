@@ -28,17 +28,25 @@ def search():
 		foodlist = recommended_food(restaurant_name)
 		session["foodlist"] = foodlist
 		session["query"] = restaurant_name
-		return redirect(url_for("search"))
+		return redirect(url_for("return_result"))
 
-	return render_template("index.html", foodlist=session["results"], restaurant_name=session["query"])
+	# return render_template("index.html", foodlist=session["results"], restaurant_name=session["query"])
+	return render_template("index.html")
 	# return render_template("index.html", food_list = foodlist, query=session["query"])
 	
 
 @app.route("/return_result", methods=["POST", "GET"])
 def return_result():
-    foodlist = session.get("results")
+    # foodlist = session.get("results")
+    foodlist = session.get("foodlist")
+    query = session.get("query")
 
-    return render_template("index.html", foodlist = foodlist)
+	# Check if foodlist is empty
+    if not foodlist:
+        return "No results found"
+    
+    # return render_template("index.html", foodlist = foodlist)
+    return render_template("index.html", foodlist=foodlist, restaurant_name=query)
     
     
 if __name__ == "__main__":
