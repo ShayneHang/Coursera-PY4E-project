@@ -94,8 +94,7 @@ pipe = pipeline("ner", model=model, tokenizer=tokenizer)
 # reviews_df = scrape_review()
 
 def recommended_food(restaurant_name: str) -> list:
-    
-    
+        
     reviews_df = scrape_review(restaurant_name)
     
     rating_food_dict = {1: [], 2: [], 3:[], 4:[], 5:[]}
@@ -114,7 +113,6 @@ def recommended_food(restaurant_name: str) -> list:
         # skip empty reviews
         if data['user_reviews'] == '':
             continue
-        
         
         review_text = data['user_reviews'].lower()
         
@@ -158,5 +156,5 @@ def recommended_food(restaurant_name: str) -> list:
     return recommended_food_list
 
 
-if __name__ == "__main__":
-    recommended_food()
+# if __name__ == "__main__":
+#     recommended_food()

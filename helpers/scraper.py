@@ -264,6 +264,8 @@ def scrape_review(restaurant_name: str) -> pd.DataFrame:
 
     print(f"\nIt took {round((end_time-start_time).total_seconds()/60, 2)}mins to extract the data\n")
     
+    driver.quit()
+    
     return review_df
 
 if __name__ == "__main__":
