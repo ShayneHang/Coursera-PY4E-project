@@ -158,3 +158,5 @@ def recommended_food(restaurant_name: str) -> list:
 
 # if __name__ == "__main__":
 #     recommended_food()
+
+# %%
