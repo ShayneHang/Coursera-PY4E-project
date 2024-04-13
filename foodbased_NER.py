@@ -1,4 +1,3 @@
-# %% 
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
 from helpers.scraper import scrape_review
@@ -158,5 +157,3 @@ def recommended_food(restaurant_name: str) -> list:
 
 # if __name__ == "__main__":
 #     recommended_food()
-
-# %%
