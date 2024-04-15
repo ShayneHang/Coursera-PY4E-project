@@ -5,9 +5,8 @@ venv/
 # sandbox
 sandbox.html
 
-# flet
-main.py
-recommend_food/
-
 # password and stuff
 .env
+
+# others
+how_to_set_up_nrgok.txt

@@ -1,79 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top Recommended Food Search</title>
+  </head>
+  <!-- searchbar is for the white area around the search box -->
+  <!-- and then margin: 0 auto; is used to center the search box / bar -->
+  <style>
+    .text-center {
+      margin-top: 80px;
+      text-align: center;
+    }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Top Recommended Food Search</title>
-</head>
-<!-- searchbar is for the white area around the search box -->
-<!-- and then margin: 0 auto; is used to center the search box / bar -->
-<style>
-  .text-center {
-    font-size: 50px;
-    margin-top: 150px;
-    text-align: center;
-  }
+    img {
+      display: block;
+      width: 200px;
+      border-radius: 10px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-  img {
-    display: block;
-    width: 200px;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+    .tip {
+      text-align: center;
+    }
 
-  .searchbar {
-    border-radius: 40px;
-    box-shadow: 2px 3px 0px -2px #ccc;
-    padding: 10px;
-    border: 0px;
-    outline: none;
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    width: 500px;
-    margin: 0 auto;
-  }
+    .searchbar {
+      border-radius: 40px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Adjust shadow parameters */
+      padding: 10px;
+      border: 1px solid #ccc; /* Consolidate border shorthand */
+      width: 40%; /* Set a specific width or use percentage-based width */
+      margin: 0 auto; /* Center the search bar horizontally */
+    }
 
-  .searchbox {
-    border: none;
-    margin: 0 auto;
-    text-align: center;
-    width: 500px;
-  }
+    .searchbox {
+      border: none;
+      outline: none; /* Ensure the input field doesn't have an outline */
+      width: 100%; /* Fill the entire width of the search bar */
+      text-align: center; /* Center the text within the input field */
+    }
 
-  .returned_list {
-    width: 400px; 
-    margin-left: auto; 
-    margin-right: auto;
-  }
+    .returned_list {
+      width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
 
-</style>
-
-<body>
-  <div>
-    <h1 class="text-center">
-      Search for top recommended food from google reviews
-    </h1>
-  </div>
-  
-  <img src="static/images/kiat2.jpg" alt="an image of kiat2" />
-  
-  <br> <!-- adds a line break between paragraphs -->
-  
-  <form action="/search" method="POST">
-    <div class="searchbar">
-      <input class="searchbox" type="text" name="restaurant_name" placeholder="search google map" />
+  <body>
+    <div>
+      <h1 class="text-center">
+        Search for top recommended food from google reviews
+      </h1>
     </div>
-  </form>
-  <!-- this is to list out the items  -->
-  <ul class="returned_list">
-    {% for item in foodlist %}
-    <li>{{item}}</li>
-    {% endfor %}
-  </ul>
-</body>
 
+    <img src="static/images/kiat2.jpg" alt="an image of kiat2" />
+
+    <br />
+    <!-- adds a line break between paragraphs -->
+
+    <h3 class="tip">Tip: make the name as accurate as possible</h3>
+
+    <form action="/search" method="POST">
+      <div class="searchbar">
+        <input
+          class="searchbox"
+          type="text"
+          name="restaurant_name"
+          placeholder="search google map"
+        />
+      </div>
+    </form>
+    <!-- this is to list out the items  -->
+    <ul class="returned_list">
+      {% for item in foodlist %}
+      <li>{{item}}</li>
+      {% endfor %}
+    </ul>
+  </body>
 </html>

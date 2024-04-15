@@ -199,14 +199,37 @@ def scrape_review(restaurant_name: str) -> pd.DataFrame:
     toscroll = driver.find_element(By.XPATH,
         '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]')
 
-    # each scroll gives only 10 reviews, so 'total review'/10 gives the total number of scrolls
-    # to scroll out all reviews #default is 'range(0,(round(num_reviews/10)))'
-    # if only updating new reviews to database, just run ~10 scrolls will be enough use 'range(0, 10)'
-    for i in range(0,(round(num_reviews/10))):
-        driver.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', toscroll)
-        time.sleep(3)
+    num_scrolls = round(num_reviews/10)
+    
 
-    print(f'.....Expanding all comments for parsing.....\n')
+    
+    
+    while True:
+        
+        # each scroll gives only 10 reviews, so 'total review'/10 gives the total number of scrolls
+        # to scroll out all reviews #default is 'range(0,(round(num_reviews/10)))'
+        # if only updating new reviews to database, just run ~10 scrolls will be enough use 'range(0, 10)'
+        for i in range(0, num_scrolls):
+            driver.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', toscroll)
+            time.sleep(1)
+        
+        # for the page to load properly then check the page for number of reviews opened
+        time.sleep(2)
+        # extract the element that contain each block of reviews to check how many reviews are opened
+        # also use for later extracting all the reviews
+        # driver.page_source returns then current webpage to parse
+        page_elements = BeautifulSoup(driver.page_source, 'html.parser')
+        review_list_elements = page_elements.find_all('div', class_="jJc9Ad")
+        print(f'this is len of elements found for reviews: {len(review_list_elements)}, this is num reviews {num_reviews}')
+        
+        
+        if len(review_list_elements) == num_reviews:
+            print(f'.....Expanding all comments for parsing.....\n')
+            break
+        else:
+            num_scrolls = num_reviews - len(review_list_elements)
+            print(f'.....continuing scrolling.....\n')
+            
 
     # expand all comments
     count = 0
@@ -221,11 +244,6 @@ def scrape_review(restaurant_name: str) -> pd.DataFrame:
 
     ### capturing the google reviews ###
     # parsing
-    # driver.page_source returns then current webpage to parse
-    page_elements = BeautifulSoup(driver.page_source, 'html.parser')
-
-    # extract the element that contain each block of reviews
-    review_list_elements = page_elements.find_all('div', class_="jJc9Ad")
 
     review_list_to_df = []
     for reviews in review_list_elements:

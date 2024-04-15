@@ -1,8 +1,8 @@
-# %% 
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
 from helpers.scraper import scrape_review
 
+import nltk
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from nltk.chunk import RegexpParser
@@ -10,7 +10,6 @@ from nltk.chunk import RegexpParser
 # nltk.download("averaged_perceptron_tagger")
 
 import pprint
-import pandas as pd
 import re
 from datetime import datetime
 
@@ -75,30 +74,20 @@ def noun_finder(text: str):
 
     return nouns
 
-# model source https://huggingface.co/Dizex/FoodBaseBERT-NER
-# tokenizer = AutoTokenizer.from_pretrained("Dizex/FoodBaseBERT")
-# model = AutoModelForTokenClassification.from_pretrained("Dizex/FoodBaseBERT")
-# pipe = pipeline("ner", model=model, tokenizer=tokenizer)
-
-tokenizer = AutoTokenizer.from_pretrained("submodules/FoodBaseBERT-NER")
-model = AutoModelForTokenClassification.from_pretrained("submodules/FoodBaseBERT-NER")
+tokenizer = AutoTokenizer.from_pretrained("Dizex/FoodBaseBERT")
+model = AutoModelForTokenClassification.from_pretrained("Dizex/FoodBaseBERT")
 pipe = pipeline("ner", model=model, tokenizer=tokenizer)
 
 # example = "Today's meal: Fresh olive poké bowl topped with chia seeds. Very delicious!"
-# ner_entity_results = pipe(example)
-# print(ner_entity_results)
-# example = "the chicken rice is very nice!"
 # ner_entity_results = pipe(example)
 # print(ner_entity_results)
 
 # get the df with the reviews
 
 
-# reviews_df = scrape_review()
-
-def recommended_food(restaurant_name: str) -> list:
-        
-    reviews_df = scrape_review(restaurant_name)
+def recommended_food():
+    
+    reviews_df = scrape_review()
     
     rating_food_dict = {1: [], 2: [], 3:[], 4:[], 5:[]}
 
@@ -116,6 +105,7 @@ def recommended_food(restaurant_name: str) -> list:
         # skip empty reviews
         if data['user_reviews'] == '':
             continue
+        
         
         review_text = data['user_reviews'].lower()
         
@@ -156,10 +146,8 @@ def recommended_food(restaurant_name: str) -> list:
     for i in recommended_food_list:
         print(i)
     
-    return recommended_food_list
+    return
 
 
-# if __name__ == "__main__":
-#     recommended_food()
-
-# %%
+if __name__ == "__main__":
+    recommended_food()
